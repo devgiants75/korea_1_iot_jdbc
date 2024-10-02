@@ -90,9 +90,61 @@ public class UserDAO {
 		return users;
 	}
 	
+	// 사용자 정보를 추가하는 메서드
+	public void addUser (User user) throws SQLException {
+		Connection connection = DBConnection.getConnection();
+		String sql = "INSERT INTO user (name, email) VALUES (?, ?)";
+		
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setString(1, user.getName());
+		statement.setString(2, user.getEmail());
+		
+		statement.executeUpdate();
+		
+		statement.close();
+		connection.close();
+	}
 	
-	
-	
+	public void updateUser(User user) throws SQLException {
+		Connection connection = DBConnection.getConnection();
+		
+		// 업데이트할 이름과 이메일이 있는지 확인
+		boolean updateName = user.getName() != null && !user.getName().isEmpty();
+		boolean updateEmail = user.getEmail() != null && !user.getEmail().isEmpty();
+		
+		// SQL 쿼리 작성
+		// cf) StringBuilder
+		// 		: 자바에서 가변 문자열을 만드는 클래스
+		StringBuilder sql = new StringBuilder("UPDATE user SET ");
+		
+		if (updateName) {
+			sql.append("name = ?, ");
+		}
+		
+		if (updateEmail) {
+			sql.append("email = ?, ");
+		}
+		
+		// 마지막 콤마를 제거
+		sql.deleteCharAt(sql.length() - 2);
+		
+		// UPDATE user SET name = ?, email = ?, 
+		
+		// where절 추가
+		sql.append("WHERE id = ?");
+
+		PreparedStatement statement = connection.prepareStatement(sql.toString());
+		
+		int parameterIndex = 1;
+		if (updateName) {
+			statement.setString(parameterIndex++, user.getName());
+		}
+		
+		if (updateEmail) {
+			statement.setString(parameterIndex++, user.getEmail());
+		}
+	}
 	
 	
 	

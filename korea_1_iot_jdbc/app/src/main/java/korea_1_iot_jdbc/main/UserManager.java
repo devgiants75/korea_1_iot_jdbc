@@ -80,7 +80,18 @@ public class UserManager {
 	
 	// 사용자 생성(CREATE)
 	private void addUser(Scanner sc, UserDAO userDao) throws SQLException {
+		System.out.print("새로운 사용자 이름 입력: ");
+		String name = sc.nextLine();
 		
+		System.out.print("새로운 사용자 이메일 입력: ");
+		String email = sc.nextLine();
+		
+		// DB의 auto_increment에 값을 전달해야 할 때는
+		// : -1의 값을 전달
+		// >> 아직 DB에 저장되지 않음을 의미하는 값
+		User newUser = new User(-1, name, email);
+		userDao.addUser(newUser);
+		System.out.println("사용자가 성공적으로 추가되었습니다.");
 	}
 	
 	// 사용자 수정(UPDATE)
