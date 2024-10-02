@@ -128,20 +128,14 @@ public class UserManager {
 	
 	// 사용자 삭제(DELETE)
 	private void deleteUser(Scanner sc, UserDAO userDao) throws SQLException {
+		System.out.print("삭제할 사용자 ID 입력: ");
 		
+		// 스캐너를 사용한 id값을 변수에 할당
+		int id = Integer.parseInt(sc.nextLine());
+		
+		// UserDAO에 메서드를 호출하여 id값을 인자로 전달 - DB의 데이터 삭제
+		userDao.deleteUser(id);
+		
+		System.out.println("사용자가 성공적으로 삭제되었습니다.");
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

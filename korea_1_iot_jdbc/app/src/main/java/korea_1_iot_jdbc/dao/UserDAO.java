@@ -147,9 +147,26 @@ public class UserDAO {
 		
 		statement.setInt(parameterIndex, user.getId());
 		
-		statement.executeQuery();
+		// SQL 실행
+		statement.executeUpdate();
 		
 		statement.close();
 		connection.close();
+	}
+	
+	public void deleteUser(int id) throws SQLException {
+		
+		try (Connection connection = DBConnection.getConnection()) {
+			String sql = "DELETE FROM user WHERE id = ?";
+			
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, id);
+			statement.executeUpdate();
+			
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
