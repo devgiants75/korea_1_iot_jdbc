@@ -144,6 +144,13 @@ public class UserDAO {
 		if (updateEmail) {
 			statement.setString(parameterIndex++, user.getEmail());
 		}
+		
+		statement.setInt(parameterIndex, user.getId());
+		
+		statement.executeQuery();
+		
+		statement.close();
+		connection.close();
 	}
 	
 	
