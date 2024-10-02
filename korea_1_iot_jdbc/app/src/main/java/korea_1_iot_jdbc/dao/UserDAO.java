@@ -152,9 +152,4 @@ public class UserDAO {
 		statement.close();
 		connection.close();
 	}
-	
-	
-	
-	
-
 }

@@ -96,6 +96,33 @@ public class UserManager {
 	
 	// 사용자 수정(UPDATE)
 	private void updateUser(Scanner sc, UserDAO userDao) throws SQLException {
+		System.out.print("수정할 사용자 ID 입력");
+		int id = Integer.parseInt(sc.nextLine());
+		
+		User user = userDao.getUserById(id);
+		
+		if (user == null) {
+			// 해당 id의 유저가 존재하지 않을 경우
+			System.out.println("해당 ID의 사용자를 찾을 수 없습니다.");
+			return;
+		}
+		
+		System.out.print("사용자의 새 이름 (변경하지 않으려면 엔터)");
+		String name = sc.nextLine();
+		System.out.print("사용자의 새 이메일 (변경하지 않으려면 엔터)");
+		String email = sc.nextLine();
+		
+		if (!name.isEmpty()) {
+			// 비워져 있지 않은 경우 - 변경할 경우
+			user.setName(name);
+		}
+		
+		if (!email.isEmpty()) {
+			user.setEmail(email);
+		}
+		
+		userDao.updateUser(user);
+		System.out.println("사용자 정보가 성공적으로 업데이트되었습니다.");
 		
 	}
 	
